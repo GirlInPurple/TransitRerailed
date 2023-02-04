@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "speed-carts-remastered",
+  "id": "speed_carts_remastered",
   "version": "${version}",
 
   "name": "Speed Carts Rerailed",
@@ -20,12 +20,12 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/speed-carts/icon.png",
+  "icon": "assets/speed_carts_remastered/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "nl.andrewlalis.speed_carts.SpeedCarts"
+      "nl.andrewlalis.speed_carts_remastered.SpeedCarts"
     ]
   },
   "mixins": [

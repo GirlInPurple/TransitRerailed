@@ -1,0 +1,9 @@
+{
+  "modmenu.original": "Original Mod",
+  "modmenu.download": "Modrinth",
+  "entity.speedCarts.currentSpeed": "Current Speed: %d",
+  "entity.speedCarts.KPH":" / KPH: %d",
+  "entity.speedCarts.MPH":" / MPH: %d",
+  "entity.speedCarts.currentLimit":" / Current Signage: %d",
+  "entity.speedCarts.globalLimit":" / Global Limit: %d"
+}
