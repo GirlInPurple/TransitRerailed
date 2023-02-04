@@ -33,8 +33,13 @@ speedometerToggle: true
 #
 # Changes the units used in the Speedometer, this toggle is for every person on the server.
 # Recommended to keep it set to KPH due to 1 block being a meter and everything lining up nicely.
-# Kilometers Per Hour ("KPH") or Miles Per Hour ("MPH")
+# Kilometers Per Hour ("KPH") and Miles Per Hour ("MPH"), and anything else to activate the "customUnits" option.
 speedometerUnits: KPH
+#
+# If "speedometerUnits" is not set to a default value, it will default to this.
+# Useful if you want something other than KPH or MPH.
+# Must be a valid number, set to the FPS conversion by default
+customUnits: 3.28084
 #
 # ------------------------------
 #
