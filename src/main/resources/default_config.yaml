@@ -1,0 +1,45 @@
+# Configuration for Speed Carts Remastered
+configVersion: 0.0.2 #DO NOT CHANGE
+#
+# A restart is required to apply changes.
+# Note: This does work on both clientside LAN servers and dedicated servers, both require said restart.
+#
+# ------------------------------
+#
+# The default speed for all carts in the world, in meters per second.
+defaultSpeed: 8
+#
+# The minimum allowable speed limit that can be set, in meters per second.
+# Settings the speed to 1 stops the cart for the specified amount of seconds, then continues
+# back at the speed it was at before. Good for train stations.
+minimumSpeed: 1
+#
+# The maximum allowable speed limit that can be set in meters per second. Editing is not recommended unless necessary.
+maximumSpeed: 128
+#
+# The regular expression that's used to determine if a sign should affect the cart's speed.
+# By default, it matches any positive decimal number.
+signRegex: \d+(\.\d+)?
+#
+# Amount of time cart waits at stations, in seconds. The smaller the wait time the less the server hangs when stopping.
+# 2-5 seconds recommended, anything above 6 seconds may cause disconnects.
+stationTime: 4
+#
+# Disables Debug messages, may cause log spam if turned on, "false" by default.
+debugToggle: false
+#
+# Client-Side option to display the Speedometer
+speedometerToggle: true
+#
+# Changes the units used in the Speedometer, this toggle is for every person on the server.
+# Recommended to keep it set to KPH due to 1 block being a meter and everything lining up nicely.
+# Kilometers Per Hour ("KPH") or Miles Per Hour ("MPH")
+speedometerUnits: KPH
+#
+# ------------------------------
+#
+# In case you want a specific IRL speed:
+# 8 MPS = 28.8 KPH = 17.89 MPH ( The vanilla speed, too slow imo. )
+# 30 MPS = 108 KPH = 67.11 MPH ( Highway Speeds, anything above is unnecessary )
+# 84 MPS = 302.4 KPH = 187.90 MPH ( Literally the speed of a bullet train, completely unnecessary )
+# 128 MPS = 460.8 KPH = 286.33 MPH ( Maximum speed for the default config of this mod, 100% will derail on turns. Be careful with this. )

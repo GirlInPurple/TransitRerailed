@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": "speed-carts-remastered",
+  "version": "${version}",
+
+  "name": "Speed Carts Rerailed",
+  "description": "Increases the speed of minecarts, among other vanilla style tweaks. A fork of Andrew Lalis' \"SpeedCarts\", and updated to the newest version (1.19.3) as of development.\nAbout the icon, what is graphical design anyway?",
+  "authors": [
+  "Andrew Lalis",
+  "Blurpled"
+    ],
+  "contributors": [
+    "PrincessCyanMarine",
+    "AnhNguyen"
+    ],
+  "contact": {
+    "homepage": "https://modrinth.com/",
+    "sources": "https://github.com/GirlInPurple",
+    "issues": "https://github.com/GirlInPurple"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/speed-carts/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "nl.andrewlalis.speed_carts.SpeedCarts"
+    ]
+  },
+  "mixins": [
+    "speed-carts.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.7",
+    "minecraft": "1.19.x",
+    "java": ">=17"
+  },
+
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.original": "https://github.com/andrewlalis/SpeedCarts"
+      },
+      "badges": []
+    }
+  }
+}
