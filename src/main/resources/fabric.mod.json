@@ -29,7 +29,7 @@
     ]
   },
   "mixins": [
-    "speed-carts.mixins.json"
+    "speed_carts_remastered.mixins.json"
   ],
 
   "depends": {

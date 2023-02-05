@@ -16,6 +16,7 @@ import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.*;
@@ -149,25 +150,21 @@ public abstract class AbstractMinecartMixin extends Entity {
 	@Inject(at = @At("INVOKE"), method = "tick")
 	public void tick(CallbackInfo ci) {
 		tickSlowdownTimer = tickSlowdownTimer + 1;
-		if (tickSlowdownTimer >= tickSlowdownValue) { // 20 ticks per second, so this updates every half second. Maybe make an option to change this?
+		if (tickSlowdownTimer >= tickSlowdownValue) {
 			double unitConversion;
+			String unitName;
 			if (SPEEDOMETER_UNITS.equals("KPH")) {
 				unitConversion = 3.6;
+				unitName = ".kph";
 			} else if (SPEEDOMETER_UNITS.equals("MPH")) {
 				unitConversion = 2.23694;
+				unitName = ".mph";
 			} else {
 				unitConversion = CUSTOM_UNITS;
+				unitName = null;
 			}
-			Text currentSpeed = Text.translatable("speedcarts.speedometer.currentspeed", String.format("%.2f", this.getVelocity().length() * 20));
-			Text speedometerUnits = Text.translatable("speedcarts.speedometer." + SPEEDOMETER_UNITS.toLowerCase(), String.format("%.2f", (this.getVelocity().length() * 20) * unitConversion));
-			Text currentLimit = Text.translatable("speedcarts.speedometer.currentlimit", String.format("%.2f", this.maxSpeedBps));
-			Text globalLimit = Text.translatable("speedcarts.speedometer.globallimit", String.format("%.2f", MAX_SPEED));
-			String speedometerOutput = String.valueOf(currentSpeed) + speedometerUnits + currentLimit + globalLimit;
-			if (this.hasPlayerRider() && SPEEDOMETER_TOGGLE) {
-				PlayerEntity player = (PlayerEntity) this.getFirstPassenger();
-				if (player != null) {
-					// someone please tell me how to use \n in this, its far too long to display comfortably on most screens
-					player.sendMessage(Text.literal(speedometerOutput), true);
+			if (SPEEDOMETER_TOGGLE && this.getFirstPassenger() instanceof PlayerEntity player) {
+				player.sendMessage(Text.translatable("speedcarts.speedometer",this.getVelocity().length() * 20, unitName, (this.getVelocity().length() * 20) * unitConversion, this.maxSpeedBps,"%.2f", MAX_SPEED), true);
 				}
 			}
 			tickSlowdownTimer = 0;

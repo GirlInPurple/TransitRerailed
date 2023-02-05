@@ -16,8 +16,8 @@ And also [Create](https://github.com/Creators-of-Create/Create), for their train
 * @GirlInPurple
 
 ### Contributors:
-* @AnhNguyenlost13
-* @PrincessCyanMarine 
+* @AnhNguyenlost13 (Tester)
+* @PrincessCyanMarine (The Speedometer is a modified version of the one in their mod)
 
 ## How To Use
 

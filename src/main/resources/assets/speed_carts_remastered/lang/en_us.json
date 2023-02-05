@@ -1,9 +1,5 @@
 {
   "modmenu.original": "Original Mod",
   "modmenu.download": "Modrinth",
-  "speedcarts.speedometer.currentspeed": "Current Speed: %d ",
-  "speedcarts.speedometer.kph":"/ KPH: %d ",
-  "speedcarts.speedometer.mph":"/ MPH: %d ",
-  "speedcarts.speedometer.currentlimit":"/ Current Signage: %d ",
-  "speedcarts.speedometer.globallimit":"/ Global Limit: %d"
+  "speed_carts_remastered.speedometer": "Current Speed: %d / %d: %d / Current Speed Signage: %d / Global Speed Limit: %d"
 }
