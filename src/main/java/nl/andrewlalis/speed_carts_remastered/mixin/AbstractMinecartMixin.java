@@ -149,7 +149,6 @@ public abstract class AbstractMinecartMixin extends Entity {
 	@Inject(at = @At("INVOKE"), method = "tick")
 	public void tick(CallbackInfo ci) {
 		tickSlowdownTimer = tickSlowdownTimer + 1;
-		LOGGER.info("Ticking amount: " + tickSlowdownTimer);
 		if (tickSlowdownTimer >= tickSlowdownValue) { // 20 ticks per second, so this updates every half second. Maybe make an option to change this?
 			double unitConversion;
 			if (SPEEDOMETER_UNITS.equals("KPH")) {
@@ -159,11 +158,11 @@ public abstract class AbstractMinecartMixin extends Entity {
 			} else {
 				unitConversion = CUSTOM_UNITS;
 			}
-			Text currentSpeed = Text.translatable("entity.speedCarts.currentSpeed", String.format("%.2f", this.getVelocity().length() * 20));
-			Text speedometerUnits = Text.translatable("entity.speedCarts." + SPEEDOMETER_UNITS, String.format("%.2f", (this.getVelocity().length() * 20) * unitConversion));
-			Text currentLimit = Text.translatable("entity.speedCarts.currentLimit", String.format("%.2f", this.maxSpeedBps));
-			Text globalLimit = Text.translatable("entity.speedCarts.globalLimit", String.format("%.2f", MAX_SPEED));
-			String speedometerOutput = String.valueOf(currentSpeed) + speedometerUnits + "\\u000A" + currentLimit + globalLimit;
+			Text currentSpeed = Text.translatable("speedcarts.speedometer.currentspeed", String.format("%.2f", this.getVelocity().length() * 20));
+			Text speedometerUnits = Text.translatable("speedcarts.speedometer." + SPEEDOMETER_UNITS.toLowerCase(), String.format("%.2f", (this.getVelocity().length() * 20) * unitConversion));
+			Text currentLimit = Text.translatable("speedcarts.speedometer.currentlimit", String.format("%.2f", this.maxSpeedBps));
+			Text globalLimit = Text.translatable("speedcarts.speedometer.globallimit", String.format("%.2f", MAX_SPEED));
+			String speedometerOutput = String.valueOf(currentSpeed) + speedometerUnits + currentLimit + globalLimit;
 			if (this.hasPlayerRider() && SPEEDOMETER_TOGGLE) {
 				PlayerEntity player = (PlayerEntity) this.getFirstPassenger();
 				if (player != null) {
@@ -171,7 +170,6 @@ public abstract class AbstractMinecartMixin extends Entity {
 					player.sendMessage(Text.literal(speedometerOutput), true);
 				}
 			}
-			LOGGER.info("Ticking Hit");
 			tickSlowdownTimer = 0;
 		}
 	}
