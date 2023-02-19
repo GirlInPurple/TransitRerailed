@@ -12,12 +12,12 @@ The [Original Mod](https://github.com/andrewlalis/SpeedCarts) that this was fork
 And also [Create](https://github.com/Creators-of-Create/Create), for their train system being unique and close to real life, I thought I should mention them.
 
 ### Main Devs:
-* [@andrewlalis](github.com/andrewlalis)
-* [@GirlInPurple](github.com/GirlInPurple)
+* [@andrewlalis](https://github.com/andrewlalis)
+* [@GirlInPurple](https://github.com/GirlInPurple)
 
 ### Contributors:
-* [@AnhNguyenlost13](github.com/AnhNguyenlost13) (Tester)
-* [@PrincessCyanMarine](github.com/PrincessCyanMarine) (The Speedometer is a modified version of the one in their mod)
+* [@AnhNguyenlost13](https://github.com/AnhNguyenlost13) (Tester)
+* [@PrincessCyanMarine](https://github.com/PrincessCyanMarine) (The Speedometer is a modified version of the one in their mod)
 
 ## How To Use
 
