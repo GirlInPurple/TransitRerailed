@@ -1,18 +1,18 @@
-package nl.andrewlalis.speed_carts_remastered;
+package xyz.blurpled.transit_rerailed;
 
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SpeedCarts implements ModInitializer {
+public class TransitRerailed implements ModInitializer {
 	public static Config config;
 
-	public static final Logger LOGGER = LoggerFactory.getLogger("SpeedCarts");
+	public static final Logger LOGGER = LoggerFactory.getLogger("TransitRerailed");
 
 	@Override
 	public void onInitialize() {
 		config = new Config();
-		LOGGER.info("SpeedCarts Init! Happy Zooming!");
+		LOGGER.info("TransitRerailed Init! Happy Zooming!");
 		LOGGER.info("All future console logs from this mod are debug messages.");
 	}
 }

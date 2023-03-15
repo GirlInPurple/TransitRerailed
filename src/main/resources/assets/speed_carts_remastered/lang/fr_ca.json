@@ -1,9 +1,0 @@
-{
-  "modmenu.original": "Mod d'Origine",
-  "modmenu.download": "Modrinth",
-  "entity.speedCarts.currentSpeed": "Vitesse d'Actuel: %d",
-  "entity.speedCarts.KPH": "/ K/H: %d",
-  "entity.speedCarts.MPH": "/ M/H: %d",
-  "entity.speedCarts.currentLimit": "/ Limite d'Actuel: %d",
-  "entity.speedCarts.globalLimit": "/ Limite Globale: %d"
-}

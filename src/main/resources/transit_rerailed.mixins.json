@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "nl.andrewlalis.speed_carts_remastered.mixin",
+  "package": "xyz.blurpled.transit_rerailed.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AbstractMinecartMixin"

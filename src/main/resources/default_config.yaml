@@ -1,17 +1,29 @@
-# Configuration for Speed Carts Remastered
-configVersion: 0.0.2 #DO NOT CHANGE
+# Configuration for TransitRemastered
 #
-# A restart is required to apply changes.
-# Note: This does work on both clientside LAN servers and dedicated servers, both require said restart.
+# DO NOT CHANGE UNLESS YOU KNOW WHAT YOU'RE DOING
+configVersion: 0.0.3
 #
-# ------------------------------
+# Notes:
+# A restart is required to apply changes. This does work on both clientside LAN servers and dedicated servers, both require said restart.
+# I HIGHLY recommend reading all the wiki pages if possible, even if you wont use them.
+#
+# ----------------- Minecarts -----------------
+#
+# The type improvements that are used on this section. Default is speedcarts
+# Options: speedcarts, mixed, flat, gravel, off
+# Defaults to off when TaterCarts (https://modrinth.com/mod/tatercart), Create, or UTM(ATPM) (https://www.curseforge.com/minecraft/mc-mods/minecraft-transit-railway) is installed due to conflicts
+#
+# speedcarts: Uses signs to differentiate speeds using a fork of the mod SpeedCarts
+# mixed: The gravel option, but for speedcarts
+# flat: A flat maximum speed increase, to all minecarts
+# gravel: The flat option, but only if gravel is below the rails
+# off: Disable any features realting to minecarts.
+minecartEngine: speedcarts
 #
 # The default speed for all carts in the world, in meters per second.
 defaultSpeed: 8
 #
 # The minimum allowable speed limit that can be set, in meters per second.
-# Settings the speed to 1 stops the cart for the specified amount of seconds, then continues
-# back at the speed it was at before. Good for train stations.
 minimumSpeed: 1
 #
 # The maximum allowable speed limit that can be set in meters per second. Editing is not recommended unless necessary.
@@ -21,30 +33,29 @@ maximumSpeed: 128
 # By default, it matches any positive decimal number.
 signRegex: \d+(\.\d+)?
 #
-# Amount of time cart waits at stations, in seconds. The smaller the wait time the less the server hangs when stopping.
-# 2-5 seconds recommended, anything above 6 seconds may cause disconnects.
-stationTime: 4
-#
 # Disables Debug messages, may cause log spam if turned on, "false" by default.
 debugToggle: false
 #
-# Client-Side option to display the Speedometer
+# Server-Side option to display the Speedometer
 speedometerToggle: true
 #
 # Changes the units used in the Speedometer, this toggle is for every person on the server.
 # Recommended to keep it set to KPH due to 1 block being a meter and everything lining up nicely.
-# Kilometers Per Hour ("KPH") and Miles Per Hour ("MPH"), and anything else to activate the "customUnits" option.
+# Kilometers Per Hour ("KPH") and Miles Per Hour ("MPH"), and anything else to activate the "customUnits" option. Must be uppercase.
 speedometerUnits: KPH
 #
 # If "speedometerUnits" is not set to a default value, it will default to this.
 # Useful if you want something other than KPH or MPH.
-# Must be a valid number, set to the FPS conversion by default
+# Must be a valid positive number, set to the FPS conversion by default
 customUnits: 3.28084
 #
-# ------------------------------
+# ----------------- Horses -----------------
 #
-# In case you want a specific IRL speed:
-# 8 MPS = 28.8 KPH = 17.89 MPH ( The vanilla speed, too slow imo. )
-# 30 MPS = 108 KPH = 67.11 MPH ( Highway Speeds, anything above is unnecessary )
-# 84 MPS = 302.4 KPH = 187.90 MPH ( Literally the speed of a bullet train, completely unnecessary )
-# 128 MPS = 460.8 KPH = 286.33 MPH ( Maximum speed for the default config of this mod, 100% will derail on turns. Be careful with this. )
+# The type improvements that are used on this section. Default is buffed
+# Options: buff, , off
+#
+horseEngine: buff
+#
+# Enable horse armour and saddle crafting recipes. Currently not implemented.
+horseRecipes: true
+# ----------------- Elytra -----------------

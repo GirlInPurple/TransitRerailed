@@ -1,4 +1,4 @@
-package nl.andrewlalis.speed_carts_remastered;
+package xyz.blurpled.transit_rerailed;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,23 +16,22 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Contains all configuration options and the logic for loading config.
+ * Contains all configuration options and the logic for loading Config.
  */
 public class Config {
-	private static final Path CONFIG_FILE = Paths.get("config", "speed_carts_remastered.yaml");
+	private static final Path CONFIG_FILE = Paths.get("Config", "transit_rerailed.yaml");
 	private final String configVersion;
 	private final double defaultSpeed;
 	private final double minimumSpeed;
 	private final double maximumSpeed;
 	private final String signRegex;
-	private final double stationTime;
 	private final boolean debugToggle;
 	private final boolean speedometerToggle;
 	private final String speedometerUnits;
 	private final double customUnits;
-	private static final Logger LOGGER = SpeedCarts.LOGGER;
-	private final List<String> validConfigVersions = Arrays.asList("0.0.1", "0.0.2", "0.0.3");
-	// Currently existing config versions: 0.0.1, 0.0.2
+	private static final Logger LOGGER = TransitRerailed.LOGGER;
+	private final List<String> validConfigVersions = Arrays.asList("0.0.3");
+	// Currently existing Config versions: .1, .2, .3
 
 
 	public Config() {
@@ -45,7 +44,6 @@ public class Config {
 			this.minimumSpeed = configJson.get("minimumSpeed").asDouble();
 			this.maximumSpeed = configJson.get("maximumSpeed").asDouble();
 			this.signRegex = configJson.get("signRegex").asText();
-			this.stationTime = configJson.get("stationTime").asDouble();
 			this.debugToggle = configJson.get("debugToggle").asBoolean();
 			this.speedometerToggle = configJson.get("speedometerToggle").asBoolean();
 			this.speedometerUnits = configJson.get("speedometerUnits").asText();
@@ -60,7 +58,7 @@ public class Config {
 			if (!Files.exists(CONFIG_FILE)) {
 				Files.createDirectories(CONFIG_FILE.getParent());
 				OutputStream out = Files.newOutputStream(CONFIG_FILE);
-				InputStream defaultConfigInputStream = SpeedCarts.class.getClassLoader().getResourceAsStream("default_config.yaml");
+				InputStream defaultConfigInputStream = TransitRerailed.class.getClassLoader().getResourceAsStream("default_config.yaml");
 				if (defaultConfigInputStream == null) {
 					throw new IOException("Could not load default_config.yaml");
 				}
@@ -73,7 +71,7 @@ public class Config {
 				out.close();
 				break;
 			} else if (!validConfigVersions.contains(configVersion)) {
-				LOGGER.info("Updated config version and configs have been wiped. Please shut down the server and check the configs.");
+				LOGGER.info("Updated Config version and configs have been wiped. Please shut down the server and check the configs.");
 				Files.delete(CONFIG_FILE);
 			} else {
 				break;
@@ -92,9 +90,6 @@ public class Config {
 	}
 	public String getSignRegex() {
 		return signRegex;
-	}
-	public Double getStationTime() {
-		return stationTime;
 	}
 	public boolean getSpeedometerToggle(){
 		return speedometerToggle;

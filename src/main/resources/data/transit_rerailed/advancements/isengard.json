@@ -1,0 +1,19 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:filled_map"
+    },
+    "title": "They're taking the Hobbits to Isengard!",
+    "description": "You've traveled 2,863,023 blocks (2,863.028 km), the rough distance from The Shire to Mordor.",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "minecraft:nether/fast_travel",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:brewed_potion"
+    }
+  }
+}

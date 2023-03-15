@@ -1,4 +1,4 @@
-package nl.andrewlalis.speed_carts_remastered.mixin;
+package xyz.blurpled.transit_rerailed.mixin;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.AbstractRailBlock;
@@ -16,12 +16,11 @@ import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
-import nl.andrewlalis.speed_carts_remastered.SpeedCarts;
+import xyz.blurpled.transit_rerailed.TransitRerailed;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -41,21 +40,20 @@ import java.sql.Timestamp;
  */
 @Mixin(AbstractMinecartEntity.class)
 public abstract class AbstractMinecartMixin extends Entity {
-	private static final double DEFAULT_SPEED = SpeedCarts.config.getDefaultSpeed();
-	private static final double MIN_SPEED = SpeedCarts.config.getMinimumSpeed();
-	private static final double MAX_SPEED = SpeedCarts.config.getMaximumSpeed();
-	private static final Pattern SIGN_PATTERN = Pattern.compile(SpeedCarts.config.getSignRegex());
-	private static final double STATION_TIME = SpeedCarts.config.getStationTime();
-	private static final boolean DEBUG_TOGGLE = SpeedCarts.config.getDebugToggle();
-	private static final boolean SPEEDOMETER_TOGGLE = SpeedCarts.config.getSpeedometerToggle();
-	private static final String SPEEDOMETER_UNITS = SpeedCarts.config.getSpeedometerUnits();
-	private static final double CUSTOM_UNITS = SpeedCarts.config.getCustomUnits();
-	private static final double tickSlowdownValue = 10;//Speedcarts.config.getTickSlowdown();
+	private static final double DEFAULT_SPEED = TransitRerailed.config.getDefaultSpeed();
+	private static final double MIN_SPEED = TransitRerailed.config.getMinimumSpeed();
+	private static final double MAX_SPEED = TransitRerailed.config.getMaximumSpeed();
+	private static final Pattern SIGN_PATTERN = Pattern.compile(TransitRerailed.config.getSignRegex());
+	private static final boolean DEBUG_TOGGLE = TransitRerailed.config.getDebugToggle();
+	private static final boolean SPEEDOMETER_TOGGLE = TransitRerailed.config.getSpeedometerToggle();
+	private static final String SPEEDOMETER_UNITS = TransitRerailed.config.getSpeedometerUnits();
+	private static final double CUSTOM_UNITS = TransitRerailed.config.getCustomUnits();
+	private static final double tickSlowdownValue = 10;//Speedcarts.Config.getTickSlowdown();
 
 	/**
 	 * The standard Fabric Logger
 	 */
-	private static final Logger LOGGER = SpeedCarts.LOGGER;
+	private static final Logger LOGGER = TransitRerailed.LOGGER;
 
 	/**
 	 * Time in game ticks, to wait before attempting to update the cart's speed
@@ -86,25 +84,16 @@ public abstract class AbstractMinecartMixin extends Entity {
 	private BlockPos lastUpdatedFrom = null;
 
 	/**
-	 * Set to true if in a station, false if not.
-	 */
-	private boolean inStation = false;
-
-	/**
 	 * Timestamp, for debug reasons.
 	 */
 	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-	/**
-	 * The speed on the last sign registered, only use is to stop the speedometer from freaking out
-	 */
-	public double speedNonFunc = DEFAULT_SPEED;
-
 	private void outDebugLogs(String input) {
-		if (DEBUG_TOGGLE){
+		if (DEBUG_TOGGLE) {
 			LOGGER.info(input);
 		}
 	}
+
 	@Shadow
 	public abstract Vec3d snapPositionToRail(double x, double y, double z);
 
@@ -119,7 +108,6 @@ public abstract class AbstractMinecartMixin extends Entity {
 	@Inject(at = @At("HEAD"), method = "getMaxSpeed", cancellable = true)
 	public void getMaxOffRailSpeedOverwrite(CallbackInfoReturnable<Double> cir) {
 		cir.setReturnValue(this.maxSpeedBps / 20.0);
-		// I would change this, but it would be a pain to go back and remove all the "* 20", so leave this please.
 	}
 
 	@Shadow
@@ -135,7 +123,8 @@ public abstract class AbstractMinecartMixin extends Entity {
 	@Shadow
 	protected abstract void moveOnRail(BlockPos pos, BlockState state);
 
-	@Shadow public abstract Direction getMovementDirection();
+	@Shadow
+	public abstract Direction getMovementDirection();
 
 	@Inject(at = @At("HEAD"), method = "moveOnRail", cancellable = true)
 	public void moveOnRailOverwrite(BlockPos pos, BlockState state, CallbackInfo ci) throws InterruptedException {
@@ -152,24 +141,28 @@ public abstract class AbstractMinecartMixin extends Entity {
 		tickSlowdownTimer = tickSlowdownTimer + 1;
 		if (tickSlowdownTimer >= tickSlowdownValue) {
 			double unitConversion;
-			String unitName;
 			if (SPEEDOMETER_UNITS.equals("KPH")) {
 				unitConversion = 3.6;
-				unitName = ".kph";
 			} else if (SPEEDOMETER_UNITS.equals("MPH")) {
 				unitConversion = 2.23694;
-				unitName = ".mph";
 			} else {
 				unitConversion = CUSTOM_UNITS;
-				unitName = null;
 			}
+			double currentSpeed = this.getVelocity().length() * 4;
+			double unitOutput = (this.getVelocity().length() * 4) * unitConversion;
 			if (SPEEDOMETER_TOGGLE && this.getFirstPassenger() instanceof PlayerEntity player) {
-				player.sendMessage(Text.translatable("speedcarts.speedometer",this.getVelocity().length() * 20, unitName, (this.getVelocity().length() * 20) * unitConversion, this.maxSpeedBps,"%.2f", MAX_SPEED), true);
-				}
+				player.sendMessage(Text.of(
+						"MPS: " + String.format("%.2f", currentSpeed) + " / " + 				// Current speed in MPS
+						SPEEDOMETER_UNITS + ": " + String.format("%.2f", unitOutput) + " / " + 	// Current speed in the server selected unit
+						// "\n" + 																// Line break, but doesn't work
+						"Current Limit: " + String.format("%.2f", this.maxSpeedBps) + " / " +  	// Current speed limit
+						"Global Limit: " + String.format("%.2f",MAX_SPEED) 						// Global speed limit
+				), true);
 			}
 			tickSlowdownTimer = 0;
 		}
 	}
+
 
 	/**
 	 * Checks for any speed modifiers (signs, blocks, etc.) and attempts to
@@ -180,7 +173,8 @@ public abstract class AbstractMinecartMixin extends Entity {
 	 */
 	private void updateForSpeedModifiers(BlockPos pos) {
 		// Quit if the cart is not moving, and set its speed to default.
-		if (this.getVelocity().length() == 0) {
+		if (this.getVelocity().length() <= 0.5) {
+			this.maxSpeedBps = DEFAULT_SPEED;
 			return;
 		}
 
@@ -206,38 +200,25 @@ public abstract class AbstractMinecartMixin extends Entity {
 	 * Also handles Sounds when signs *are* present.
 	 */
 	private boolean updateSpeedForSign(SignBlockEntity sign) {
-		Text text = sign.getTextOnRow(0, false);
-		String s = text.getString();
-		if (!SIGN_PATTERN.matcher(s).matches()) {
-			return false;
+		Text text1 = sign.getTextOnRow(0, false);
+		String SignContents = text1.getString();
+		PlayerEntity player = null;
+		if (this.hasPlayerRider()) {
+			player = (PlayerEntity) this.getFirstPassenger();
 		}
 		try {
-			double speed = Double.parseDouble(s);
+			double speed = Double.parseDouble(SignContents);
 			if (speed >= MIN_SPEED && speed <= MAX_SPEED) {
-				if (speed == 1) {
-					LOGGER.info("Rolled Into Station");
-					inStation = true;
-				} else {
-					this.maxSpeedBps = speed;
-				}
+				this.maxSpeedBps = speed;
 				this.lastSpeedUpdate = this.world.getTime();
 				this.lastUpdatedFrom = sign.getPos();
-				if (this.hasPlayerRider()) {
-					PlayerEntity player = (PlayerEntity) this.getFirstPassenger();
-					if (player != null) {
 
-					  	if (this.getVelocity().length() * 20 < speed) {
-					  		// Accelerating / Speeding Up
-							player.playSound(SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 1.0f, 1.0f);
-					 	} else if (this.getVelocity().length() * 20  > speed) {
-							// Breaking / Slowing Down
-							player.playSound(SoundEvents.BLOCK_REDSTONE_TORCH_BURNOUT, SoundCategory.PLAYERS, 1.0f, 1.0f);
-						}
-					  	if (speed == 1) {
-						  	// Entering Station
-							player.playSound(SoundEvents.BLOCK_BELL_USE, SoundCategory.PLAYERS, 1.0f, 1.0f);
-					 	}
-					}
+				if ((this.getVelocity().length() * 20) + 2 < speed && player != null) {
+					// Accelerating / Speeding Up
+					player.playSound(SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 1.0f, 1.0f);
+				} else if ((this.getVelocity().length() * 20) + 2 > speed && player != null) {
+					// Breaking / Slowing Down
+					player.playSound(SoundEvents.BLOCK_REDSTONE_TORCH_BURNOUT, SoundCategory.PLAYERS, 1.0f, 1.0f);
 				}
 				return true;
 			} else {
@@ -428,15 +409,6 @@ public abstract class AbstractMinecartMixin extends Entity {
 		if (onPoweredRail) {
 			vec3d7 = this.getVelocity();
 			af = vec3d7.horizontalLength();
-
-			if (inStation){
-				this.setVelocity(0, vec3d7.y, 0);
-				LOGGER.info("Entering Station");
-
-				Thread.sleep((long) (STATION_TIME * 1000));
-				inStation = false;
-				LOGGER.info("Leaving Station");
-			}
 
 			if (af > 0.01D) {
 				this.setVelocity(vec3d7.add(vec3d7.x / af * 0.06D, 0.0D, vec3d7.z / af * 0.06D));

@@ -1,35 +1,35 @@
 {
   "schemaVersion": 1,
-  "id": "speed_carts_remastered",
+  "id": "transit_rerailed",
   "version": "${version}",
 
-  "name": "Speed Carts Rerailed",
+  "name": "TransitRerailed",
   "description": "Increases the speed of minecarts, among other vanilla style tweaks. A fork of Andrew Lalis' \"SpeedCarts\", and updated to the newest version (1.19.3) as of development.\nAbout the icon, what is graphical design anyway?",
   "authors": [
-  "Andrew Lalis",
-  "Blurpled"
+    "AnhNguyen",
+    "Blurpled"
     ],
   "contributors": [
     "PrincessCyanMarine",
-    "AnhNguyen"
+    "Andrew Lalis"
     ],
   "contact": {
     "homepage": "https://modrinth.com/",
-    "sources": "https://github.com/GirlInPurple",
-    "issues": "https://github.com/GirlInPurple"
+    "sources": "https://github.com/GirlInPurple/TransitRerailed",
+    "issues": "https://github.com/GirlInPurple/TransitRerailed/issues"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/speed_carts_remastered/icon.png",
+  "icon": "assets/transit_rerailed/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "nl.andrewlalis.speed_carts_remastered.SpeedCarts"
+      "xyz.blurpled.transit_rerailed.TransitRerailed"
     ]
   },
   "mixins": [
-    "speed_carts_remastered.mixins.json"
+    "transit_rerailed.mixins.json"
   ],
 
   "depends": {
