@@ -1,3 +1,5 @@
+# this mod is deprecated, go to [the original mod](https://github.com/andrewlalis/SpeedCarts), [High-Speed Rail](https://modrinth.com/mod/highspeed-rail), or [Tatercart](https://modrinth.com/mod/tatercart) for similar features.
+
 # Speed Carts Rerailed
 
 This mod adds the ability to control minecarts with signs, but in many more ways than the original.
